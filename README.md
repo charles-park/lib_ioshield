@@ -1,12 +1,16 @@
 # lib_ioshield
 LCD16x2 IO Shield (WiringPi)
 
-wiringPi install : https://wiki.odroid.com/odroid-c4/application_note/gpio/wiringpi#wiringpi
+wiringPi install(wiki) : https://wiki.odroid.com/odroid-c4/application_note/gpio/wiringpi#wiringpi
 
 ```
 // add apt-source list for wiringPi (ubuntu 24.01-odroidc4)
-odroid@server:/etc/apt/sources.list.d$ cat ppa-linuxfactory-or-kr.list 
+root@odroid:/etc/apt/sources.list.d$ cat ppa-linuxfactory-or-kr.list 
 deb [trusted=yes] http://ppa.linuxfactory.or.kr noble main
+
+root@odroid:/etc/apt/sources.list.d$ apt update
+root@odroid:/etc/apt/sources.list.d$ apt install odroid-wiringpi
+root@odroid:/etc/apt/sources.list.d$ apt install libwiringpi-dev
 ```
 
 ```
