@@ -27,7 +27,7 @@ Usage: ./lib_ioshield [-xymctsr]
 
 ```
 // LCD Display
-./lib_ioshield -x 0 -y 0 -m 'hello odroid!!"
+./lib_ioshield -x 0 -y 0 -m 'hello odroid!!'
 // Time Display & Offset
 ./lib_ioshield -t 9
 // LED Control (D1 ~ D7), D1 On, D2 off
