@@ -161,7 +161,7 @@ int main (int argc, char **argv)
 
     ioshield_init (bt_callback);
 
-    ioshield_lcd_clear (-1);
+    ioshield_lcd_clear (OPT_CLEAR);
 
     /* D1 ~ D7(1 ~ 7) */
     ioshield_led_set (OPT_LED_SET,   1);
