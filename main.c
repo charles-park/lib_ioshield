@@ -157,6 +157,8 @@ static int bt_callback (int bt_state)
 //------------------------------------------------------------------------------
 int main (int argc, char **argv)
 {
+    unsigned char i = 0;
+
     parse_opts(argc, argv);
 
     ioshield_init (bt_callback);
@@ -174,6 +176,8 @@ int main (int argc, char **argv)
             time_display (OPT_TIME_OFFSET);
 
         sleep(1);
+
+        ioshield_led_byte(i++);
     }
 
     return 0;

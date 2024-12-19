@@ -91,6 +91,7 @@ enum {
 //------------------------------------------------------------------------------
 // Function prototype
 //------------------------------------------------------------------------------
+extern int ioshield_led_byte    (unsigned char led_byte);
 extern int ioshield_led_set     (int led_port, int led_state);
 extern int ioshield_lcd_clear   (int line);
 extern int ioshield_lcd_printf  (int x, int y, char *fmt, ...);

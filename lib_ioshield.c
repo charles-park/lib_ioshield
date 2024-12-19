@@ -92,6 +92,40 @@ static void *thread_bt_func (void *arg)
 
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
+// PCB Layout (byte form)
+// | D1(MSB) | D2 | D3 | D4 | D7 | D6 | D5(LSB) |
+//------------------------------------------------------------------------------
+union bits_u {
+    struct bits_s {
+        unsigned char bit0 :1;  // D5 : lsb first
+        unsigned char bit1 :1;  // D6 :
+        unsigned char bit2 :1;  // D7 :
+        unsigned char bit3 :1;  // D4 :
+        unsigned char bit4 :1;  // D3 :
+        unsigned char bit5 :1;  // D2 :
+        unsigned char bit6 :1;  // D1 :
+        unsigned char bit7 :1;  // -- :
+    }   bits;
+    unsigned char byte;
+};
+
+int ioshield_led_byte (unsigned char led_byte)
+{
+    union bits_u led;
+
+    led.byte = led_byte;
+
+    digitalWrite (PORT_LED5, led.bits.bit0);
+    digitalWrite (PORT_LED6, led.bits.bit1);
+    digitalWrite (PORT_LED7, led.bits.bit2);
+    digitalWrite (PORT_LED4, led.bits.bit3);
+    digitalWrite (PORT_LED3, led.bits.bit4);
+    digitalWrite (PORT_LED2, led.bits.bit5);
+    digitalWrite (PORT_LED1, led.bits.bit6);
+    return 1;
+}
+
+//------------------------------------------------------------------------------
 int ioshield_led_set (int led_num, int led_state)
 {
     int led_port;
@@ -166,7 +200,9 @@ int ioshield_init (int (*bt_callback_func)(int))
         fprintf (stderr, "%s : lcd init failed!\n", __func__);
         return 0;
     }
+
     // thread lcd
+    ioshield_lcd_clear (-1);
     pthread_create (&thread_fb, NULL, thread_fb_func, (void *)&shield);
 
     // Button Pull Up Enable.
