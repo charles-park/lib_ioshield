@@ -42,7 +42,7 @@ struct ioshield shield;
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 pthread_t thread_fb;
-pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t mutex_ioshield = PTHREAD_MUTEX_INITIALIZER;
 
 static void *thread_fb_func (void *arg)
 {
@@ -51,12 +51,12 @@ static void *thread_fb_func (void *arg)
 
     while (1) {
         for (row = 0; row < BOARD_LCD_ROW; row++) {
-            pthread_mutex_lock (&mutex);
+            pthread_mutex_lock (&mutex_ioshield);
             lcdPosition(ps->fd, 0, row);
             for (col = 0; col < BOARD_LCD_COL; col++) {
                 lcdPutchar (ps->fd, ps->fb[row][col]);
             }
-            pthread_mutex_unlock (&mutex);
+            pthread_mutex_unlock (&mutex_ioshield);
         }
         usleep (100 * 1000);
     }
