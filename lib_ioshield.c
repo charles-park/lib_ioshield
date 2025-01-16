@@ -69,7 +69,7 @@ pthread_t thread_bt;
 static void *thread_bt_func (void *arg)
 {
     struct ioshield *ps = (struct ioshield *)arg;
-    int bt1_old, bt2_old;
+    int bt1_old, bt2_old, bt1_long = 0, bt2_long = 0;
 
     bt1_old = digitalRead (PORT_BUTTON1);
     bt2_old = digitalRead (PORT_BUTTON2);
@@ -78,12 +78,23 @@ static void *thread_bt_func (void *arg)
         if (ps->callback_func != NULL) {
             if (bt1_old != digitalRead(PORT_BUTTON1)) {
                 bt1_old  = digitalRead(PORT_BUTTON1);
+                bt1_long = bt1_old ? 0 : 30;
                 ps->callback_func (bt1_old ? eBT1_RELEASE : eBT1_PRESS);
             }
             if (bt2_old != digitalRead(PORT_BUTTON2)) {
                 bt2_old  = digitalRead(PORT_BUTTON2);
+                bt2_long = bt2_old ? 0 : 30;
                 ps->callback_func (bt2_old ? eBT2_RELEASE : eBT2_PRESS);
             }
+        }
+        /* Button long press : 3sec */
+        if (!bt1_old && bt1_long)   {
+            bt1_long -= 1;
+            if (bt1_long == 0)  ps->callback_func (eBT1_LONG_PRESS);
+        }
+        if (!bt2_old && bt2_long)   {
+            bt2_long -= 1;
+            if (bt2_long == 0)  ps->callback_func (eBT2_LONG_PRESS);
         }
         usleep (100 * 1000);
     }

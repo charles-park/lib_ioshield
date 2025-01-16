@@ -46,8 +46,10 @@
 enum {
     eBT_UNKNOWN,
     eBT1_PRESS,
+    eBT1_LONG_PRESS,
     eBT1_RELEASE,
     eBT2_PRESS,
+    eBT2_LONG_PRESS,
     eBT2_RELEASE,
     eBT_END
 };
